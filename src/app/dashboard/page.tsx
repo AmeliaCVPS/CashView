@@ -242,7 +242,7 @@ export default function DashboardPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-3xl font-bold text-foreground">
-                  R$ {stats.totalSavings.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                  R$ {stats.totalSavings.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </p>
                 <p className="text-xs text-success mt-1">
                   Continue economizando!

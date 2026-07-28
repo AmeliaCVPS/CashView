@@ -232,7 +232,7 @@ export default function TransacoesPage() {
             </CardHeader>
             <CardContent>
               <p className="text-3xl font-bold text-foreground">
-                R$ {totalIncome.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                R$ {totalIncome.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </p>
             </CardContent>
           </Card>
@@ -246,7 +246,7 @@ export default function TransacoesPage() {
             </CardHeader>
             <CardContent>
               <p className="text-3xl font-bold text-foreground">
-                R$ {totalExpense.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                R$ {totalExpense.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </p>
             </CardContent>
           </Card>
@@ -260,7 +260,7 @@ export default function TransacoesPage() {
             </CardHeader>
             <CardContent>
               <p className={`text-3xl font-bold ${balance >= 0 ? "text-success" : "text-warning"}`}>
-                R$ {balance.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                R$ {balance.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </p>
             </CardContent>
           </Card>
@@ -314,6 +314,7 @@ export default function TransacoesPage() {
                       {transaction.type === "income" ? "+" : "-"}R${" "}
                       {transaction.amount.toLocaleString("pt-BR", {
                         minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
                       })}
                     </p>
                   </div>

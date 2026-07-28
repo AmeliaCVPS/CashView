@@ -261,7 +261,7 @@ export default function FinancasPage() {
             </CardHeader>
             <CardContent>
               <p className="text-3xl font-bold text-foreground">
-                R$ {totalIncome.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                R$ {totalIncome.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </p>
             </CardContent>
           </Card>
@@ -275,7 +275,7 @@ export default function FinancasPage() {
             </CardHeader>
             <CardContent>
               <p className="text-3xl font-bold text-foreground">
-                R$ {totalExpenses.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                R$ {totalExpenses.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </p>
             </CardContent>
           </Card>
@@ -289,7 +289,7 @@ export default function FinancasPage() {
             </CardHeader>
             <CardContent>
               <p className={`text-3xl font-bold ${balance >= 0 ? "text-success" : "text-danger"}`}>
-                R$ {balance.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                R$ {balance.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </p>
             </CardContent>
           </Card>
@@ -303,7 +303,7 @@ export default function FinancasPage() {
             </CardHeader>
             <CardContent>
               <p className="text-3xl font-bold text-foreground">
-                R$ {totalPostponed.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                R$ {totalPostponed.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </p>
               <p className="text-xs text-muted-foreground mt-1">
                 Compras adiadas
@@ -418,7 +418,7 @@ export default function FinancasPage() {
                 <div className="bg-card p-4 rounded-lg mb-4">
                   <p className="text-muted-foreground mb-1">Despesa:</p>
                   <p className="text-xl font-bold text-foreground">
-                    R$ {currentExpense.amount.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                    R$ {currentExpense.amount.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </p>
                   <p className="text-sm text-muted-foreground mt-1">{currentExpense.description}</p>
                 </div>
@@ -532,6 +532,7 @@ export default function FinancasPage() {
                         {transaction.type === "income" ? "+" : "-"}R${" "}
                         {transaction.amount.toLocaleString("pt-BR", {
                           minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
                         })}
                       </p>
                       {transaction.milesEarned && transaction.milesEarned > 0 && (

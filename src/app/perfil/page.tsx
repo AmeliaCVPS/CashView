@@ -244,7 +244,7 @@ export default function PerfilPage() {
                     <span className="text-sm text-muted-foreground">Economizado</span>
                   </div>
                   <span className="font-bold text-foreground">
-                    R$ {stats.totalSavings.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                    R$ {stats.totalSavings.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </span>
                 </div>
 

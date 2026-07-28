@@ -685,7 +685,7 @@ export default function SimuladorPage() {
                 </p>
                 <p className="text-2xl font-bold text-foreground">
                   R${" "}
-                  {totalInvested.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                  {totalInvested.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </p>
               </div>
             </CardContent>
@@ -719,7 +719,7 @@ export default function SimuladorPage() {
                         R${" "}
                         {simulation.scenarios.pessimista[
                           simulation.scenarios.pessimista.length - 1
-                        ].toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                        ].toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </p>
                       <p className="text-xs text-muted-foreground mt-1">
                         {(selectedType.minReturn * 100).toFixed(1)}% a.a.
@@ -730,7 +730,7 @@ export default function SimuladorPage() {
                           simulation.scenarios.pessimista[
                             simulation.scenarios.pessimista.length - 1
                           ] - totalInvested
-                        ).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                        ).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </p>
                     </CardContent>
                   </Card>
@@ -746,7 +746,7 @@ export default function SimuladorPage() {
                         R${" "}
                         {simulation.scenarios.realista[
                           simulation.scenarios.realista.length - 1
-                        ].toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                        ].toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </p>
                       <p className="text-xs text-muted-foreground mt-1">
                         {(selectedType.avgReturn * 100).toFixed(1)}% a.a.
@@ -757,7 +757,7 @@ export default function SimuladorPage() {
                           simulation.scenarios.realista[
                             simulation.scenarios.realista.length - 1
                           ] - totalInvested
-                        ).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                        ).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </p>
                     </CardContent>
                   </Card>
@@ -773,7 +773,7 @@ export default function SimuladorPage() {
                         R${" "}
                         {simulation.scenarios.otimista[
                           simulation.scenarios.otimista.length - 1
-                        ].toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                        ].toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </p>
                       <p className="text-xs text-muted-foreground mt-1">
                         {(selectedType.maxReturn * 100).toFixed(1)}% a.a.
@@ -784,7 +784,7 @@ export default function SimuladorPage() {
                           simulation.scenarios.otimista[
                             simulation.scenarios.otimista.length - 1
                           ] - totalInvested
-                        ).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                        ).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </p>
                     </CardContent>
                   </Card>
@@ -819,7 +819,7 @@ export default function SimuladorPage() {
                               border: '1px solid #1e293b',
                               borderRadius: '8px'
                             }}
-                            formatter={(value: any) => `R$ ${Number(value).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`}
+                            formatter={(value: any) => `R$ ${Number(value).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
                             labelFormatter={(label) => `Mês ${label}`}
                           />
                           <Legend />
