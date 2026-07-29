@@ -471,6 +471,7 @@ npm run start        # Inicia servidor de produção
 npm run lint         # Executa ESLint para verificar código
 npm run db:generate  # Gera migrations a partir do schema
 npm run db:push      # Aplica o schema no banco
+npm run db:seed      # Cadastra as ONGs parceiras (pode rodar mais de uma vez)
 ```
 
 ---
@@ -500,9 +501,16 @@ O deploy sobe o código, mas **não cria as tabelas**. Rode uma vez, na sua máq
 
 ```bash
 npm run db:push
+npm run db:seed
 ```
 
-Sem isso, o primeiro acesso falha ao tentar ler o banco.
+Sem o `db:push`, o primeiro acesso falha ao tentar ler o banco. Sem o `db:seed`, a
+página `/doacoes` sobe sem nenhuma ONG cadastrada. O seed pode ser rodado mais de
+uma vez — ele ignora as ONGs que já existem.
+
+> ⚠️ `TURSO_CONNECTION_URL=file:local.db` só funciona na sua máquina. O sistema de
+> arquivos da Vercel é efêmero e somente leitura, então em produção **toda** query
+> falha. Use sempre uma URL remota (`libsql://...`) no ambiente da Vercel.
 
 ---
 

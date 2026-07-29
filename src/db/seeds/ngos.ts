@@ -50,11 +50,23 @@ async function main() {
         },
     ];
 
-    await db.insert(ngos).values(sampleNgos);
-    
-    console.log('✅ NGOs seeder completed successfully');
+    // Insere apenas o que ainda nao existe, para o seed poder rodar mais de uma vez
+    // sem duplicar as ONGs.
+    const existing = await db.select({ name: ngos.name }).from(ngos);
+    const existingNames = new Set(existing.map((ngo) => ngo.name));
+    const missing = sampleNgos.filter((ngo) => !existingNames.has(ngo.name));
+
+    if (missing.length === 0) {
+        console.log('✅ NGOs ja estavam cadastradas, nada a fazer');
+        return;
+    }
+
+    await db.insert(ngos).values(missing);
+
+    console.log(`✅ NGOs seeder completed successfully (${missing.length} inseridas)`);
 }
 
 main().catch((error) => {
     console.error('❌ Seeder failed:', error);
+    process.exit(1);
 });
