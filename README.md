@@ -484,16 +484,25 @@ npm run db:push      # Aplica o schema no banco
 
 | Variável | Obrigatória | Observação |
 |---|---|---|
-| `TURSO_CONNECTION_URL` | Sim | URL do banco Turso |
-| `TURSO_AUTH_TOKEN` | Sim | Token do banco Turso |
-| `BETTER_AUTH_SECRET` | Sim | `openssl rand -base64 32` |
-| `NEXT_PUBLIC_SITE_URL` | Sim | Domínio final, ex: `https://cashview.vercel.app` |
-| `FINNHUB_API_KEY` | Não | Sem ela, a tela **Mercado** não carrega os ativos |
+| `TURSO_CONNECTION_URL` | **Sim** | URL do banco Turso |
+| `TURSO_AUTH_TOKEN` | **Sim** | Token do banco Turso |
+| `BETTER_AUTH_SECRET` | **Sim** | O better-auth **lança erro em produção** se faltar. Gere com `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"` |
+| `NEXT_PUBLIC_SITE_URL` | Recomendada | Domínio final, ex: `https://cashview.vercel.app` |
+| `BETTER_AUTH_URL` | Recomendada | Mesmo valor acima. Sem ela o better-auth deduz a URL pelos cabeçalhos `x-forwarded-host`/`x-forwarded-proto` que a Vercel envia — funciona, mas depender do proxy é frágil |
+| `FINNHUB_API_KEY` | Não | Sem ela, a tela **Mercado** retorna erro e não lista ativos |
 | `COINGECKO_API_KEY` | Não | Melhora o limite de requisições de cripto |
 
 5. Clique em **Deploy**.
 
-> Rode `npm run db:push` uma vez apontando para o banco de produção antes do primeiro acesso, para criar as tabelas.
+### Criar as tabelas no banco de produção
+
+O deploy sobe o código, mas **não cria as tabelas**. Rode uma vez, na sua máquina, com o `.env` local apontando para o banco de produção:
+
+```bash
+npm run db:push
+```
+
+Sem isso, o primeiro acesso falha ao tentar ler o banco.
 
 ---
 
