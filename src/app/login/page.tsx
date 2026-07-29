@@ -31,9 +31,17 @@ export default function LoginPage() {
         callbackURL: "/dashboard",
       });
 
-      if (error?.code) {
+      if (error) {
+        // Credencial errada e o caso comum e tem texto proprio; qualquer outra falha
+        // mostra a causa real, senao fica impossivel distinguir "senha errada" de
+        // "o servidor caiu".
+        const credencialInvalida =
+          error.code === "INVALID_EMAIL_OR_PASSWORD" || error.status === 401;
+        const detalhe = [error.message, error.code].filter(Boolean).join(" — ");
         toast.error(
-          "Email ou senha inválidos. Verifique se você já criou uma conta e tente novamente."
+          credencialInvalida
+            ? "Email ou senha inválidos. Verifique se você já criou uma conta e tente novamente."
+            : `Erro ao fazer login: ${detalhe || "falha inesperada"}`
         );
         setLoading(false);
         return;
@@ -42,7 +50,8 @@ export default function LoginPage() {
       toast.success("Login realizado com sucesso!");
       router.push("/dashboard");
     } catch (error) {
-      toast.error("Erro ao fazer login. Tente novamente.");
+      const detalhe = error instanceof Error ? error.message : String(error);
+      toast.error(`Erro ao fazer login: ${detalhe}`);
       setLoading(false);
     }
   };

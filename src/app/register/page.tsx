@@ -42,11 +42,19 @@ export default function RegisterPage() {
         password: formData.password,
       });
 
-      if (error?.code) {
+      if (error) {
         const errorMap: Record<string, string> = {
+          // O better-auth devolve o codigo com sufixo; o nome curto ficava sem efeito.
+          USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL: "Este email já está cadastrado",
           USER_ALREADY_EXISTS: "Este email já está cadastrado",
         };
-        toast.error(errorMap[error.code] || "Erro ao criar conta");
+        // Sem um caso mapeado, mostra a causa real em vez de um texto generico:
+        // e o que permite descobrir o problema quando algo inesperado acontece.
+        const detalhe = [error.message, error.code].filter(Boolean).join(" — ");
+        toast.error(
+          (error.code && errorMap[error.code]) ||
+            (detalhe ? `Erro ao criar conta: ${detalhe}` : "Erro ao criar conta")
+        );
         setLoading(false);
         return;
       }
@@ -62,7 +70,8 @@ export default function RegisterPage() {
       
       router.push("/dashboard");
     } catch (error) {
-      toast.error("Erro ao criar conta. Tente novamente.");
+      const detalhe = error instanceof Error ? error.message : String(error);
+      toast.error(`Erro ao criar conta: ${detalhe}`);
       setLoading(false);
     }
   };
