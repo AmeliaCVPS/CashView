@@ -64,7 +64,9 @@ export default function MercadoPage() {
   // Auto-refresh every 30 seconds - ONLY for Market page
   useEffect(() => {
     const intervalId = setInterval(() => {
-      loadAssets();
+      // Em segundo plano: sem trocar a lista pelo estado de carregamento e sem
+      // repetir o toast de erro a cada 30 segundos.
+      loadAssets(true);
     }, 30000); // 30 seconds
 
     return () => clearInterval(intervalId);
@@ -74,28 +76,28 @@ export default function MercadoPage() {
     filterAssets();
   }, [searchQuery, assets, filter]);
 
-  const loadAssets = async () => {
+  const loadAssets = async (emSegundoPlano = false) => {
     try {
-      setIsLoading(true);
+      if (!emSegundoPlano) setIsLoading(true);
       const response = await fetch(`/api/market?type=all`);
-      
+
       if (!response.ok) {
         throw new Error('Falha ao carregar dados do mercado');
       }
 
       const data = await response.json();
-      
+
       if (data.error) {
-        toast.error(data.error);
+        if (!emSegundoPlano) toast.error(data.error);
         return;
       }
 
       setAssets(data.assets || []);
     } catch (error) {
       console.error('Erro ao carregar ativos:', error);
-      toast.error('Erro ao carregar dados do mercado');
+      if (!emSegundoPlano) toast.error('Erro ao carregar dados do mercado');
     } finally {
-      setIsLoading(false);
+      if (!emSegundoPlano) setIsLoading(false);
     }
   };
 

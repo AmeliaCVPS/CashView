@@ -57,7 +57,9 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (session?.user) {
-      fetchDashboardData();
+      // So a primeira carga mostra o spinner; as atualizacoes seguintes acontecem
+      // em segundo plano, senao a tela inteira pisca a cada 10 segundos.
+      fetchDashboardData(refreshKey > 0);
     }
   }, [session, refreshKey]);
 
@@ -70,9 +72,9 @@ export default function DashboardPage() {
     return () => clearInterval(interval);
   }, []);
 
-  const fetchDashboardData = async () => {
+  const fetchDashboardData = async (emSegundoPlano = false) => {
     try {
-      setLoading(true);
+      if (!emSegundoPlano) setLoading(true);
       const token = localStorage.getItem("bearer_token");
       
       // Fetch all data in parallel
@@ -106,7 +108,7 @@ export default function DashboardPage() {
     } catch (error) {
       console.error("Erro ao carregar dados:", error);
     } finally {
-      setLoading(false);
+      if (!emSegundoPlano) setLoading(false);
     }
   };
 
